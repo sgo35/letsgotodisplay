@@ -17,10 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  *
  */
 @Entity
-@Table(name = "meteo")
-@EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
-public class MeteoData {
+//@Table(name = "weather")
+//@EntityListeners(AuditingEntityListener.class)
+//@JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
+public class WeatherData {
     protected static final String JSON_DATE_TIME = "dt";
     protected static final String JSON_MAIN = "main";
     protected static final String JSON_WIND = "wind";
