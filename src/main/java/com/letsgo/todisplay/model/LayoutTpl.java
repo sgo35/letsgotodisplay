@@ -15,7 +15,16 @@ public class LayoutTpl {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
     private int width;
     private int height;
 	
+ 
+    public LayoutTpl(String name, int width, int height) {
+        super();
+        this.name = name;
+        this.width = width;
+        this.height = height;
+    }
+
 }

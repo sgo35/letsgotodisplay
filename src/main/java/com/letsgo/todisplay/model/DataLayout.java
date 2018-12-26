@@ -24,6 +24,13 @@ public class DataLayout {
     
     private int pos_x;
     private int pos_y;
+    
+    public DataLayout(LayoutTpl layoutTpl, int pos_x, int pos_y) {
+        super();
+        this.layoutTpl = layoutTpl;
+        this.pos_x = pos_x;
+        this.pos_y = pos_y;
+    }
 	
 
 }
