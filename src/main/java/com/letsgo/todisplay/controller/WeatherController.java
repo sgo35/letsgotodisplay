@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin
 @RequestMapping("/api/weather")
 @RestController
 public class WeatherController {

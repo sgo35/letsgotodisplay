@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.letsgo.todisplay.model.DataLayout;
 
 //@PreAuthorize("hasRole('ROLE_USER')")
-@CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE }, maxAge = 3600)
+@CrossOrigin
 @RepositoryRestResource
 public interface DataLayoutRepository extends CrudRepository<DataLayout, Long>{
 

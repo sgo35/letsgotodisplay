@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import com.letsgo.todisplay.model.DataLayout;
 import com.letsgo.todisplay.model.LayoutTpl;
@@ -25,9 +26,17 @@ public class LetsgoDisplayApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        LayoutTpl ltpl = new LayoutTpl("weather", 100, 100);
-        layoutTplRepository.save(ltpl);
-        dataLayoutRepository.save(new DataLayout(ltpl, 1, 1));
+        LayoutTpl ltpl = new LayoutTpl(null, "weather", 100, 100);
+        try {
+            if (layoutTplRepository.save(ltpl) == null) {
+                System.out.println("Instance LayoutTpl null ou déjà existante");
+            } else {
+                dataLayoutRepository.save(new DataLayout(null, ltpl, 1, 1));
+            };
+           
+        } catch (Exception e) {
+            System.err.println("ERROR Instance LayoutTpl : " + e);
+        }
     }
 
 }
