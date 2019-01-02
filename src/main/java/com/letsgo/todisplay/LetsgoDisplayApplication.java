@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
 
 import com.letsgo.todisplay.model.DataLayout;
 import com.letsgo.todisplay.model.LayoutTpl;
@@ -11,6 +13,8 @@ import com.letsgo.todisplay.repository.DataLayoutRepository;
 import com.letsgo.todisplay.repository.LayoutTplRepository;
 
 @SpringBootApplication
+@EnableConfigurationProperties(WeatherAppProperties.class)
+@EnableCaching(proxyTargetClass = true)
 public class LetsgoDisplayApplication implements CommandLineRunner {
     
     @Autowired

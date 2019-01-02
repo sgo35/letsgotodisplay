@@ -1,7 +1,8 @@
 package com.letsgo.todisplay.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@RequiredArgsConstructor(staticName="of")
+//@ToString(of= {"pos_x", "pos_y"})
 @Embeddable
 @Entity
-public class DataLayout {
+public class DataLayout implements Serializable{
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +35,4 @@ public class DataLayout {
     private int pos_x;
     private int pos_y;
     
-//    public DataLayout(LayoutTpl layoutTpl, int pos_x, int pos_y) {
-//        super();
-//        this.layoutTpl = layoutTpl;
-//        this.pos_x = pos_x;
-//        this.pos_y = pos_y;
-//    }
-	
-
 }

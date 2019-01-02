@@ -20,3 +20,7 @@ spring:
     rest:
       return-body-on-create: true
       return-body-on-update: true
+app: 
+  weather: 
+    api: 
+      key: 2154cbadaa3015485f10fff459f8d611    
