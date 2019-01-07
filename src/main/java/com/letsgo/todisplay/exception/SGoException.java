@@ -4,11 +4,17 @@ import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by moksha on 03/07/2016.
  */
+@Getter
+@Setter
 public class SGoException extends IOException {
-    private HttpStatus statusCode;
+    
+	private HttpStatus statusCode;
 
     private String body;
 
@@ -21,11 +27,4 @@ public class SGoException extends IOException {
         this.statusCode = statusCode;
     }
 
-    public HttpStatus getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(HttpStatus statusCode) {
-        this.statusCode = statusCode;
-    }
 }

@@ -1,4 +1,4 @@
-package com.letsgo.todisplay.model;
+package com.letsgo.todisplay.weather;
 
 import javax.validation.constraints.NotNull;
 

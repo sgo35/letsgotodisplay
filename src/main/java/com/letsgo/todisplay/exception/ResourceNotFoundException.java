@@ -3,11 +3,13 @@ package com.letsgo.todisplay.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import lombok.Getter;
+
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
-    private String resourceName;
-    private String fieldName;
-    private Object fieldValue;
+	@Getter String resourceName;
+	@Getter	String fieldName;
+	@Getter Object fieldValue;
 
     public ResourceNotFoundException() {
         // TODO Auto-generated constructor stub
@@ -31,17 +33,5 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
         // TODO Auto-generated constructor stub
-    }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public String getFieldName() {
-        return fieldName;
-    }
-
-    public Object getFieldValue() {
-        return fieldValue;
     }
 }

@@ -1,4 +1,4 @@
-package com.letsgo.todisplay.model;
+package com.letsgo.todisplay.weather;
 
 import java.util.Date;
 
@@ -9,6 +9,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Extrait de https://github.com/migtavares/owmClient
  * https://openweathermap.org/api
@@ -16,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author s.goudard
  *
  */
-@Entity
+@Getter
+@Setter
 public class WeatherData {
     protected static final String JSON_DATE_TIME = "dt";
     protected static final String JSON_MAIN = "main";

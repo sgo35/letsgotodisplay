@@ -1,4 +1,4 @@
-package com.letsgo.todisplay.model;
+package com.letsgo.todisplay.weather;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,19 +8,17 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
-public class WeatherForecast implements Serializable {
+import lombok.Getter;
+import lombok.Setter;
 
-    private String name;
+@Getter()
+@Setter()
+public class WeatherForecastOld implements Serializable {
+
+	private String name;
+//    private String country;
 
     private List<WeatherEntry> entries = new ArrayList<>();
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @JsonProperty("entries")
     public List<WeatherEntry> getEntries() {

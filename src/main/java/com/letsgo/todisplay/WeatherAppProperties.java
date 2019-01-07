@@ -7,29 +7,23 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @ConfigurationProperties("app.weather")
 public class WeatherAppProperties {
 
     @Valid
+    @Getter
     private final Api api = new Api();
 
     /**
      * Comma-separated list of locations to display. Each entry should have the
      * form "Country/City".
      */
+    @Getter
+    @Setter
     private List<String> locations = Arrays.asList("FR/Rennes", "Russia/Moscow");
-
-    public Api getApi() {
-        return this.api;
-    }
-
-    public List<String> getLocations() {
-        return this.locations;
-    }
-
-    public void setLocations(List<String> locations) {
-        this.locations = locations;
-    }
 
     public static class Api {
 
@@ -37,16 +31,9 @@ public class WeatherAppProperties {
          * API key of the OpenWeatherMap service.
          */
         @NotNull
+        @Getter
+        @Setter
         private String key;
-
-        public String getKey() {
-            return this.key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
     }
 
 }
