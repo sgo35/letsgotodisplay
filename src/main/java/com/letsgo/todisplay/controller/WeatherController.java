@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.letsgo.todisplay.model.WeatherForecast;
+import com.letsgo.todisplay.WeatherAppProperties;
+import com.letsgo.todisplay.model.Weather;
 import com.letsgo.todisplay.service.WeatherService;
 
 //@CrossOrigin
@@ -19,11 +20,14 @@ public class WeatherController {
 	//	https://openweathermap.org/weather-data
 
     
-    private final WeatherService weatherService;
+	private final WeatherService weatherService;
 
-    public WeatherController(WeatherService weatherService) {
-        this.weatherService = weatherService;
-}
+	private final WeatherAppProperties properties;
+
+	public WeatherController(WeatherService weatherService, WeatherAppProperties properties) {
+		this.weatherService = weatherService;
+		this.properties = properties;
+	}
     
 	@GetMapping("/icon/{icon}")
 	public String getIconByWheater(@PathVariable String icon) {
@@ -38,10 +42,11 @@ public class WeatherController {
 //	        return this.weatherService.getWeather(country, city);
 //	    }
 
-	    @RequestMapping("/weekly/{country}/{city}")
-	    public WeatherForecast getWeatherForecast(@PathVariable String country,
+	    @GetMapping(value = "/weekly/{country}/{city}", 
+	    		produces = "application/json; charset=utf-8")
+	    public Weather getWeatherForecast(@PathVariable String country,
 	            @PathVariable String city) {
-	        return this.weatherService.getWeatherForecast(country, city);
+	        return this.weatherService.getWeather(country, city);
 	}
 	    
 	

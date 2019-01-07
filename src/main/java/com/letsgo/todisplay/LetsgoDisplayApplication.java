@@ -1,11 +1,16 @@
 package com.letsgo.todisplay;
 
+import java.nio.charset.Charset;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import com.letsgo.todisplay.model.DataLayout;
 import com.letsgo.todisplay.model.LayoutTpl;
@@ -17,7 +22,15 @@ import com.letsgo.todisplay.repository.LayoutTplRepository;
 @EnableCaching(proxyTargetClass = true)
 public class LetsgoDisplayApplication implements CommandLineRunner {
     
-    @Autowired
+	@Bean
+	public RestTemplate restTemplate() {
+		RestTemplate rt = new RestTemplate();
+//		rt.getMessageConverters()
+//        .add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
+		return rt;
+	}
+
+	@Autowired
     private LayoutTplRepository layoutTplRepository;
     
     @Autowired

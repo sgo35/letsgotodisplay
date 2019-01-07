@@ -1,10 +1,10 @@
 package com.letsgo.todisplay.service;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -14,54 +14,58 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 
 import com.letsgo.todisplay.WeatherAppProperties;
-import com.letsgo.todisplay.model.WeatherData;
-import com.letsgo.todisplay.model.WeatherForecast;
+import com.letsgo.todisplay.handler.SGoResponseErrorHandler;
+import com.letsgo.todisplay.model.Weather;
 
 @Service
 public class WeatherService {
 
     private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather?q={city},{country}&APPID={key}";
-
     private static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?q={city},{country}&APPID={key}";
-//    private static final String APPID = "2154cbadaa3015485f10fff459f8d611";
-
     private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
     private final RestTemplate restTemplate;
+	private final String apiUrl;
+	private final String apiKey;
 
-    private final String apiKey;
+	public WeatherService(RestTemplate restTemplate, WeatherAppProperties properties) {
+		this.restTemplate = restTemplate;
+		this.restTemplate.setErrorHandler(new SGoResponseErrorHandler());
+		this.apiKey = properties.getApi().getKey();
+		this.apiUrl = FORECAST_URL;
+	}
 
-    public WeatherService(RestTemplateBuilder restTemplateBuilder, WeatherAppProperties properties) {
-//    public WeatherService(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-        this.apiKey = properties.getApi().getKey();
-//        this.apiKey = APPID;
-    }
+	@Cacheable("weather")
+	public Weather getWeather(String city, String country){
+		logger.debug("Requesting current weather for {},[{}]", city, country);
+		logger.debug("API key {} , url {}", apiKey, apiUrl);
+		Weather weather = null;
+		if(validParameters(city, country)) {
+			URI url = new UriTemplate(this.apiUrl).expand(city, country, this.apiKey);
 
-//    @Cacheable("weather")
-//    public Weather getWeather(String country, String city) {
-//        logger.info("Requesting current weather for {}/{}", country, city);
-//        URI url = new UriTemplate(WEATHER_URL).expand(city, country, this.apiKey);
-//        return invoke(url, Weather.class);
-//    }
+			weather = invoke(url, Weather.class);
+		}
+		logger.debug("weather {}", weather);
+		return weather;
+	}
 
-    @Cacheable("forecast")
-    public WeatherForecast getWeatherForecast(String country, String city) {
-        logger.info("Requesting weather forecast for {}/{} :: {}", country, city, this.apiKey);
-        URI url = new UriTemplate(FORECAST_URL).expand(city, country, this.apiKey);
-        return invoke(url, WeatherForecast.class);
-    }
+	private boolean validParameters(String city, String country) {
+		return  country !=null && !"".equals(country) && city !=null && !"".equals(city) && apiKey !=null && !"".equals(apiKey) && apiUrl!=null && !"".equals(apiUrl);
+	}
 
-    private <T> T invoke(URI url, Class<T> responseType) {
-        logger.info("Requesting invoke {} :: {}", responseType.getName(), url);
-//        RequestEntity<?> request = RequestEntity.get(url)
-//                .accept(MediaType.APPLICATION_JSON).build();
+	private <T> T invoke(URI url, Class<T> responseType){
+		T weather = null;
+		try {
+			RequestEntity<?> request = RequestEntity.get(url)
+			        .accept(MediaType.APPLICATION_JSON).build();
+			ResponseEntity<T> exchange = this.restTemplate
+					.exchange(request, responseType)
+					;
+			weather = exchange.getBody();
+		} catch(Exception e){
+				logger.error("An error occurred while calling openweathermap.org API endpoint:  " + e.getMessage());
+		}
 
-        RequestEntity<?> request = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-        ResponseEntity<T> response = this.restTemplate.exchange(request, responseType);
-
-        logger.info("Requesting exchange {} :: {}", responseType, response.getBody());
-        return response.getBody();
-    }
-
+		return weather;
+	}
 }
