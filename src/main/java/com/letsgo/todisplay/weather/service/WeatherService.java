@@ -20,10 +20,10 @@ import com.letsgo.todisplay.handler.SGoResponseErrorHandler;
 public class WeatherService {
 
 	private static final Logger logger = Logger.getLogger(WeatherService.class);
-	private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/{prefix}?q={city},{country}&APPID={key}&lang={lang}&units={units}&cnt={cnt}";
+	private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/{prefix}?q={city},{country}&APPID={key}&lang={lang}&units={units}";
 
 	private final RestTemplate restTemplate;
-	private final String apiUrl;
+	private String apiUrl;
 	private final String apiKey;
 
 	public WeatherService(RestTemplate restTemplate, WeatherAppProperties properties) {
@@ -44,6 +44,10 @@ public class WeatherService {
 		headers.setAccept(Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
 		// Request to return JSON format
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		if (cnt > -1) {
+		    this.apiUrl += "&cnt={cnt}";
+		}
 
 		URI url = new UriTemplate(this.apiUrl).expand(prefix, city, country, this.apiKey, "fr_fr", "metric", cnt);
 
@@ -62,10 +66,12 @@ public class WeatherService {
 		T weather = null;
 		try {
 			RequestEntity<?> request = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-			logger.debug(String.format("url %s", url));
+			logger.debug(String.format("Class %s ; request %s", responseType.getSimpleName(), request));
 			ResponseEntity<T> exchange = this.restTemplate.exchange(request, responseType);
-			weather = exchange.getBody();
 			logger.debug(String.format("exchange : %s", exchange));
+			if (exchange != null) {
+			    weather = exchange.getBody();
+			}
 		} catch (Exception e) {
 			logger.error("An error occurred while calling openweathermap.org API endpoint: ", e);
 		}

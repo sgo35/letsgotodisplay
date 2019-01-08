@@ -1,6 +1,7 @@
 package com.letsgo.todisplay.weather.service;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.letsgo.todisplay.weather.model.WeatherForecast;
 import com.letsgo.todisplay.weather.model.WeatherNow;
 
 //@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/weather")
 @RestController
 public class WeatherController {
@@ -35,22 +37,22 @@ public class WeatherController {
 //	        return this.weatherService.getWeather(country, city);
 //	    }
 
-	@GetMapping(value = "/weekly/{country}/{city}", produces = "application/json; charset=utf-8")
+	@GetMapping(value = "/forecast/{country}/{city}", produces = "application/json; charset=utf-8")
 	public WeatherForecast getWeatherForecast(@PathVariable String country, @PathVariable String city) {
 		logger.debug(String.format("getWeatherForecast %s,%s", city, country));
-		return this.weatherService.getWeather("forecast", WeatherForecast.class, city, country, 5);
+		return this.weatherService.getWeather("forecast", WeatherForecast.class, city, country, -1);
 	}
 
-	@GetMapping(value = "daily/{country}/{city}/{cnt}", produces = "application/json; charset=utf-8")
+	@GetMapping(value = "/daily/{country}/{city}/{cnt}", produces = "application/json; charset=utf-8")
 	public WeatherDaily getWeatherForecast(@PathVariable String country, @PathVariable String city, @PathVariable int cnt) {
-		logger.debug(String.format("getWeatherDaily %s,%s", city, country));
+		logger.debug(String.format("getWeatherDaily %s,%s, %s", city, country, cnt));
 		return this.weatherService.getWeather("forecast/daily", WeatherDaily.class, city, country, cnt);
 	}
 	
-	@GetMapping(value = "/now/{country}/{city}", produces = "application/json; charset=utf-8")
+	@GetMapping(value = "/current/{country}/{city}", produces = "application/json; charset=utf-8")
 	public WeatherNow getWeather(@PathVariable String country, @PathVariable String city) {
-		logger.debug(String.format("getWeather %s,%s", city, country));
-		return this.weatherService.getWeather("weather", WeatherNow.class, city, country, 1);
+		logger.debug(String.format("getWeatherCurrent %s,%s", city, country));
+		return this.weatherService.getWeather("weather", WeatherNow.class, city, country, -1);
 	}
 
 }
