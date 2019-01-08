@@ -37,6 +37,12 @@ public class WeatherController {
 //	        return this.weatherService.getWeather(country, city);
 //	    }
 
+	@GetMapping(value = "/forecast/{city}", produces = "application/json; charset=utf-8")
+	public WeatherForecast getWeatherForecast(@PathVariable String city) {
+		logger.debug(String.format("getWeatherForecast %s", city));
+		return this.weatherService.getWeather("forecast", WeatherForecast.class, city);
+	}
+	
 	@GetMapping(value = "/forecast/{country}/{city}", produces = "application/json; charset=utf-8")
 	public WeatherForecast getWeatherForecast(@PathVariable String country, @PathVariable String city) {
 		logger.debug(String.format("getWeatherForecast %s,%s", city, country));

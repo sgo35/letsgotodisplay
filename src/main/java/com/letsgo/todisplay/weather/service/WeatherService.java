@@ -20,7 +20,7 @@ import com.letsgo.todisplay.handler.SGoResponseErrorHandler;
 public class WeatherService {
 
 	private static final Logger logger = Logger.getLogger(WeatherService.class);
-	private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/{prefix}?q={city},{country}&APPID={key}&lang={lang}&units={units}";
+	private static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/{prefix}?q={city}{country}&APPID={key}&lang={lang}&units={units}";
 
 	private final RestTemplate restTemplate;
 	private String apiUrl;
@@ -35,6 +35,16 @@ public class WeatherService {
 	}
 
 	@Cacheable("weather")
+	public <T> T getWeather(String prefix, Class<T> responseType, String city, int cnt) {
+		return getWeather(prefix, responseType, city, null, cnt);
+	}
+
+	@Cacheable("weather")
+	public <T> T getWeather(String prefix, Class<T> responseType, String city) {
+		return getWeather(prefix, responseType, city, null, -1);
+	}
+	
+	@Cacheable("weather")
 	public <T> T getWeather(String prefix, Class<T> responseType, String city, String country, int cnt) {
 		T result;
 //		if(validParameters(city, country)) {
@@ -48,8 +58,8 @@ public class WeatherService {
 		if (cnt > -1) {
 		    this.apiUrl += "&cnt={cnt}";
 		}
-
-		URI url = new UriTemplate(this.apiUrl).expand(prefix, city, country, this.apiKey, "fr_fr", "metric", cnt);
+		final String countryCondition = country != null && country.length() > 0 ? "," + country : "";
+		URI url = new UriTemplate(this.apiUrl).expand(prefix, city, countryCondition, this.apiKey, "fr_fr", "metric", cnt);
 
 		result = invoke(url, responseType);			
 //		}
