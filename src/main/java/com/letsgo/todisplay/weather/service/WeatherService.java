@@ -59,7 +59,8 @@ public class WeatherService {
 		    this.apiUrl += "&cnt={cnt}";
 		}
 		final String countryCondition = country != null && country.length() > 0 ? "," + country : "";
-		URI url = new UriTemplate(this.apiUrl).expand(prefix, city, countryCondition, this.apiKey, "fr_fr", "metric", cnt);
+		logger.debug("getWeather :" +  this.apiUrl);
+		URI url = new UriTemplate(this.apiUrl).expand(prefix, city, countryCondition, this.apiKey, "fr_fr", "metric", cnt + "");
 
 		result = invoke(url, responseType);			
 //		}
