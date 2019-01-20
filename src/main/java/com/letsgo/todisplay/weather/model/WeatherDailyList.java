@@ -32,7 +32,7 @@ public class WeatherDailyList implements Serializable
     @JsonProperty("humidity")
     public int humidity;
     @JsonProperty("weather")
-    public java.util.List<Weather> weather = new ArrayList<Weather>();
+    public java.util.List<WeatherOWM> weather = new ArrayList<WeatherOWM>();
     @JsonProperty("speed")
     public float speed;
     @JsonProperty("deg")

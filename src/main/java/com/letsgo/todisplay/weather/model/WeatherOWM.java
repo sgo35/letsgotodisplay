@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "description",
     "icon"
 })
-public class Weather implements Serializable
+public class WeatherOWM implements Serializable
 {
 
     @JsonProperty("id")

@@ -28,7 +28,7 @@ public class WeatherList implements Serializable
     @JsonProperty("main")
     public Main main;
     @JsonProperty("weather")
-    public List<Weather> weather = new ArrayList<Weather>();
+    public List<WeatherOWM> weather = new ArrayList<WeatherOWM>();
     @JsonProperty("clouds")
     public Clouds clouds;
     @JsonProperty("wind")

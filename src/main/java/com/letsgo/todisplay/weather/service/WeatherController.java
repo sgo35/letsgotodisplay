@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.letsgo.todisplay.WeatherAppProperties;
-import com.letsgo.todisplay.weather.model.WeatherDaily;
-import com.letsgo.todisplay.weather.model.WeatherForecast;
-import com.letsgo.todisplay.weather.model.WeatherNow;
+import com.letsgo.todisplay.weather.model.WeatherOWMDaily;
+import com.letsgo.todisplay.weather.model.WeatherOWMForecast;
+import com.letsgo.todisplay.weather.model.WeatherOWMNow;
 
 //@CrossOrigin
 @CrossOrigin(origins = "http://localhost:4200")
@@ -38,27 +38,27 @@ public class WeatherController {
 //	    }
 
 	@GetMapping(value = "/forecast/{city}", produces = "application/json; charset=utf-8")
-	public WeatherForecast getWeatherForecast(@PathVariable String city) {
+	public WeatherOWMForecast getWeatherForecast(@PathVariable String city) {
 		logger.debug(String.format("getWeatherForecast %s", city));
-		return this.weatherService.getWeather("forecast", WeatherForecast.class, city);
+		return this.weatherService.getWeather("forecast", WeatherOWMForecast.class, city);
 	}
 	
 	@GetMapping(value = "/forecast/{country}/{city}", produces = "application/json; charset=utf-8")
-	public WeatherForecast getWeatherForecast(@PathVariable String country, @PathVariable String city) {
+	public WeatherOWMForecast getWeatherForecast(@PathVariable String country, @PathVariable String city) {
 		logger.debug(String.format("getWeatherForecast %s,%s", city, country));
-		return this.weatherService.getWeather("forecast", WeatherForecast.class, city, country, -1);
+		return this.weatherService.getWeather("forecast", WeatherOWMForecast.class, city, country, -1);
 	}
 
 	@GetMapping(value = "/daily/{country}/{city}/{cnt}", produces = "application/json; charset=utf-8")
-	public WeatherDaily getWeatherForecast(@PathVariable String country, @PathVariable String city, @PathVariable int cnt) {
+	public WeatherOWMDaily getWeatherForecast(@PathVariable String country, @PathVariable String city, @PathVariable int cnt) {
 		logger.debug(String.format("getWeatherDaily %s,%s, %s", city, country, cnt));
-		return this.weatherService.getWeather("forecast/daily", WeatherDaily.class, city, country, cnt);
+		return this.weatherService.getWeather("forecast/daily", WeatherOWMDaily.class, city, country, cnt);
 	}
 	
 	@GetMapping(value = "/current/{country}/{city}", produces = "application/json; charset=utf-8")
-	public WeatherNow getWeather(@PathVariable String country, @PathVariable String city) {
+	public WeatherOWMNow getWeather(@PathVariable String country, @PathVariable String city) {
 		logger.debug(String.format("getWeatherCurrent %s,%s", city, country));
-		return this.weatherService.getWeather("weather", WeatherNow.class, city, country, -1);
+		return this.weatherService.getWeather("weather", WeatherOWMNow.class, city, country, -1);
 	}
 
 }

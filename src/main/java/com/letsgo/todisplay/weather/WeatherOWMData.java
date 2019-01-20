@@ -21,7 +21,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class WeatherData {
+public class WeatherOWMData {
     protected static final String JSON_DATE_TIME = "dt";
     protected static final String JSON_MAIN = "main";
     protected static final String JSON_WIND = "wind";

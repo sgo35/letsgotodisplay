@@ -11,17 +11,15 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "city",
     "cod",
     "message",
     "cnt",
-    "list"
+    "list",
+    "city"
 })
-public class WeatherDaily implements Serializable
+public class WeatherOWMForecast implements Serializable
 {
 
-    @JsonProperty("city")
-    public City city;
     @JsonProperty("cod")
     public String cod;
     @JsonProperty("message")
@@ -29,7 +27,9 @@ public class WeatherDaily implements Serializable
     @JsonProperty("cnt")
     public int cnt;
     @JsonProperty("list")
-    public List<WeatherDailyList> list = new ArrayList<WeatherDailyList>();
-    private final static long serialVersionUID = -5009142278687722405L;
+    public List<WeatherList> list = new ArrayList<WeatherList>();
+    @JsonProperty("city")
+    public City city;
+    private final static long serialVersionUID = -8254215406530381764L;
 
 }

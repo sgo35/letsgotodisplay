@@ -24,13 +24,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "cod"
 })
-public class WeatherNow implements Serializable
+public class WeatherOWMNow implements Serializable
 {
 
     @JsonProperty("coord")
     public Coord coord;
     @JsonProperty("weather")
-    public List<Weather> weather = new ArrayList<Weather>();
+    public List<WeatherOWM> weather = new ArrayList<WeatherOWM>();
     @JsonProperty("base")
     public String base;
     @JsonProperty("main")
