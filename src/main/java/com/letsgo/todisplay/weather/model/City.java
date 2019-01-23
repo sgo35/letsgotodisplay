@@ -1,32 +1,23 @@
 
 package com.letsgo.todisplay.weather.model;
 
-import java.io.Serializable;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import javax.persistence.*;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "id",
-    "name",
-    "coord",
-    "country",
-    "population"
-})
-public class City implements Serializable
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@Entity
+public class City
 {
-
-    @JsonProperty("id")
-    public int id;
-    @JsonProperty("name")
+    @Id
+	public int id;
     public String name;
-    @JsonProperty("coord")
-    public Coord coord;
-    @JsonProperty("country")
     public String country;
-    @JsonProperty("population")
-    public int population;
-    private final static long serialVersionUID = -8015738080105422106L;
-
+    @Embedded
+    public Coord coord;
+    public int population = 0;
+    
+    public City() {}
 }
