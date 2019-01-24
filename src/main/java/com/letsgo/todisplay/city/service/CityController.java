@@ -18,12 +18,6 @@ public class CityController {
         this.cityService = cityService;
     }
 
-//	    @GetMapping("/list")
-//	    public Iterable<City> list() 
-//	    {
-//	        return cityService.list();
-//	    }
-
     @GetMapping("/list")
     public Iterable<City> list(
             @RequestParam(name = "name", required = false) String name,
