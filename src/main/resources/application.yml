@@ -3,6 +3,8 @@ spring:
     password: '%letsgo%'
     url: jdbc:postgresql://localhost:5432/letsgotodisplay
     username: letsgo
+    tomcat:
+      connectionProperties: useUnicode=true;characterEncoding=utf-8;
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
     hibernate:
