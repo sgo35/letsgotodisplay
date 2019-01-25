@@ -7,12 +7,9 @@ import org.springframework.http.HttpStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Created by moksha on 03/07/2016.
- */
 @Getter
 @Setter
-public class SGoException extends IOException {
+public class SGoException extends IOException  {
     
 	private HttpStatus statusCode;
 
