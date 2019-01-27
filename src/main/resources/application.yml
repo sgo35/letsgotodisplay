@@ -20,6 +20,7 @@ spring:
     show-sql: false
   data:
     rest:
+      base-path: /api
       return-body-on-create: true
       return-body-on-update: true
 app: 

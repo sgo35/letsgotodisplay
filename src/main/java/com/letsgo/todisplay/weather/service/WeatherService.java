@@ -15,9 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriTemplate;
 
 import com.letsgo.todisplay.WeatherAppProperties;
-import com.letsgo.todisplay.city.service.CityService;
+import com.letsgo.todisplay.city.City;
+import com.letsgo.todisplay.city.CityService;
 import com.letsgo.todisplay.handler.SGoResponseErrorHandler;
-import com.letsgo.todisplay.weather.model.City;
 
 @Service
 public class WeatherService {
@@ -77,7 +77,7 @@ public class WeatherService {
     		        this.apiUrl += "&q={filter}";
     		    } else {
 //    		        final String countryCondition = country != null && country.length() > 0 ? "," + country : "";
-    		        City _city = this.cityService.first(null, city, country);
+    		        City _city = this.cityService.search(city, country, null).iterator().next();
     		        if (_city == null) {
     		            System.out.println("city not found, city=" + city + ", country=" + country);
     		        } else {

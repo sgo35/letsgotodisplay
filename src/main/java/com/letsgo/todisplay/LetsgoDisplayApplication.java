@@ -15,12 +15,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.letsgo.todisplay.city.service.CityService;
+import com.letsgo.todisplay.city.City;
+import com.letsgo.todisplay.city.CityService;
+import com.letsgo.todisplay.country.Country;
+import com.letsgo.todisplay.country.CountryService;
 import com.letsgo.todisplay.model.DataLayout;
 import com.letsgo.todisplay.model.LayoutTpl;
 import com.letsgo.todisplay.repository.DataLayoutRepository;
 import com.letsgo.todisplay.repository.LayoutTplRepository;
-import com.letsgo.todisplay.weather.model.City;
 
 @SpringBootApplication
 @EnableConfigurationProperties(WeatherAppProperties.class)
@@ -60,23 +62,44 @@ public class LetsgoDisplayApplication implements CommandLineRunner {
         }
     }
     
-	@Bean
-	CommandLineRunner runner(CityService cityService) {
+//	@Bean
+	CommandLineRunner runner(
+			CityService cityService
+			, CountryService  countryService) {
 		return args -> {
-			// read json and write to db
-			ObjectMapper mapper = new ObjectMapper();
-			TypeReference<List<City>> typeReference = new TypeReference<List<City>>(){};
-			InputStream inputStream = TypeReference.class.getResourceAsStream("/data/city.list.json");
-			try {
-				List<City> cities = mapper.readValue(inputStream,typeReference);
-				cityService.save(cities);
-				System.out.println("Cities Saved!");
-			} catch (IOException e){
-				System.out.println("Unable to save cities: " + e.getMessage());
-			}
+			createCountryData(countryService);
+			createCityData(cityService);
 		};
 	}
 
+	private void createCityData(CityService cityService) {
+		// read json and write to db
+		ObjectMapper mapper = new ObjectMapper();
+		TypeReference<List<City>> typeReference = new TypeReference<List<City>>(){};
+		InputStream inputStream = TypeReference.class.getResourceAsStream("/data/city.list.json");
+		try {
+			List<City> cities = mapper.readValue(inputStream,typeReference);
+			cityService.save(cities);
+			System.out.println("Cities Saved!");
+		} catch (IOException e){
+			System.out.println("Unable to save cities: " + e.getMessage());
+		}
+	}
+
+	private void createCountryData(CountryService countryService) {
+		// read json and write to db
+		ObjectMapper mapper = new ObjectMapper();
+		TypeReference<List<Country>> typeReference = new TypeReference<List<Country>>(){};
+		InputStream inputStream = TypeReference.class.getResourceAsStream("/data/countries_fr.json");
+		try {
+			List<Country> countries = mapper.readValue(inputStream,typeReference);
+			countryService.save(countries);
+			System.out.println("Countries Saved!");
+		} catch (IOException e){
+			System.out.println("Unable to save countries: " + e.getMessage());
+		}
+	}
+	
 //    @Bean
 //    public WebMvcConfigurer corsConfigurer() {
 //        return new WebMvcConfigurerAdapter() {

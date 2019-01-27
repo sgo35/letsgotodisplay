@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.letsgo.todisplay.WeatherAppProperties;
-import com.letsgo.todisplay.city.service.CityNotFoundException;
 import com.letsgo.todisplay.weather.model.WeatherOWMDaily;
 import com.letsgo.todisplay.weather.model.WeatherOWMForecast;
 import com.letsgo.todisplay.weather.model.WeatherOWMNow;
@@ -55,8 +54,6 @@ public class WeatherController {
         logger.debug(String.format("getWeatherForecast city=%s,country=%s", city, country));
         try {
             return this.weatherService.getWeather("forecast", WeatherOWMForecast.class, city, country, "", page, size);
-        } catch (CityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "City Not Found", e);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Weather Not Found", e);
         }
@@ -70,8 +67,6 @@ public class WeatherController {
         try {
             logger.debug(String.format("getWeatherDaily %s,%s, %s", city, country, cnt));
             return this.weatherService.getWeather("forecast/daily", WeatherOWMDaily.class, city, country, cnt, page, size);
-        } catch (CityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "City Not Found", e);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Weather Not Found", e);
         }
@@ -85,8 +80,6 @@ public class WeatherController {
         try {
             logger.debug(String.format("getWeatherCurrent %s,%s", city, country));
             return this.weatherService.getWeather("weather", WeatherOWMNow.class, city, country, "", page, size);
-        } catch (CityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "City Not Found", e);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Weather Not Found", e);
         }

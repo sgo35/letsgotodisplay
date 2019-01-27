@@ -9,7 +9,7 @@ import com.letsgo.todisplay.repository.DataLayoutRepository;
 
 
 //@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api")
+//@RequestMapping("/api")
 @RestController
 public class DataLayoutController {
     
