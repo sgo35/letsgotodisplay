@@ -51,7 +51,7 @@ public class WeatherController {
             @RequestParam(name = "country", required = false) String country,
             @RequestParam(name = "page", required = false) String page,
             @RequestParam(name = "size", required = false) String size) {
-        logger.debug(String.format("getWeatherForecast city=%s,country=%s", city, country));
+//        logger.debug(String.format("getWeatherForecast city=%s,country=%s", city, country));
         try {
             return this.weatherService.getWeather("forecast", WeatherOWMForecast.class, city, country, "", page, size);
         } catch (Exception e) {

@@ -39,17 +39,17 @@ public class WeatherService {
 		this.restTemplate.setErrorHandler(new SGoResponseErrorHandler());
 	}
 
-	@Cacheable("weather")
+//	@Cacheable("weather")
 	public <T> T getWeather(String prefix, Class<T> responseType, String city, String cnt) throws Exception {
 		return getWeather(prefix, responseType, city, null, cnt, "0", "20");
 	}
 
-	@Cacheable("weather")
+//	@Cacheable("weather")
 	public <T> T getWeather(String prefix, Class<T> responseType, String city) throws Exception {
 		return getWeather(prefix, responseType, city, null, "", "0", "20");
 	}
 	
-	@Cacheable("weather")
+//	@Cacheable("weather")
     public <T> T getWeather(String prefix, Class<T> responseType, String city, String country, String cnt, String page, String size) throws Exception {
 		T result = null;
         this.apiUrl = WEATHER_URL;
